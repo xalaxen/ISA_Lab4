@@ -14,8 +14,9 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <DataGrid x:Name="studentsGrid" ItemsSource="{Binding StudentsList, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="True" Margin="0,0,0,78" RenderTransformOrigin="0.5,0">
+        <DataGrid x:Name="studentsGrid" ItemsSource="{Binding StudentsList, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" Margin="0,0,0,78" RenderTransformOrigin="0.5,0">
             <DataGrid.Columns>
+                <!-- Добавляем колонку с кнопкой "Удалить" -->
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -23,9 +24,72 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+
+                <!-- Добавляем колонку с возможностью редактирования -->
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Имя" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridCheckBoxColumn Header="Пол" Binding="{Binding Sex, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                    <DataGridCheckBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type CheckBox}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridCheckBoxColumn.ElementStyle>
+                    <DataGridCheckBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type CheckBox}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridCheckBoxColumn.EditingElementStyle>
+                </DataGridCheckBoxColumn>
+                <DataGridTextColumn Header="Возраст" Binding="{Binding Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="200,330,0,0">
+
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="200,330,0,0">
             <Button x:Name="LoadButton" Content="Загрузить данные" Click="LoadData_Click"/>
             <Button x:Name="SaveButton" Content="Сохранить данные" Click="SaveData_Click"/>
         </StackPanel>

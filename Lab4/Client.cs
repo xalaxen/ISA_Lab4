@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -40,6 +41,18 @@ namespace Lab4
             string jsonData = JsonConvert.SerializeObject(StudentsList);
             SendMessage("Save");
             SendMessage(jsonData);
+        }
+
+        public bool CheckStudents()
+        {
+            foreach(var s in StudentsList)
+            {
+                if(string.IsNullOrEmpty(s.Name) || string.IsNullOrEmpty(s.Surname) || s.Age == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public void RemoveStudentNote(int rowId)
@@ -81,7 +94,6 @@ namespace Lab4
             catch (Exception ex)
             {
                 return ex.Message;
-                Console.WriteLine(ex.Message);
             }
         }
 

@@ -24,6 +24,7 @@ namespace Lab4
     public partial class MainWindow : Window
     {
         private Client viewClient;
+        private bool isErrorDisplayed = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -40,13 +41,20 @@ namespace Lab4
 
         private void SaveData_Click(object sender, RoutedEventArgs e)
         {
-            if(viewClient.StudentsList != null)
+            if (viewClient.StudentsList != null)
             {
-                viewClient.SaveStudentListData();
+                if (viewClient.CheckStudents())
+                {
+                    viewClient.SaveStudentListData();
+                }
+                else
+                {
+                    MessageBox.Show("Данные небыли сохранены!\nЗаполните или удалите красные строчки!\n\nПоля: фамили и имя обязательны!\nВозраст должен быть больше 0!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
-                MessageBox.Show("Для начала надо загрузить данные!");
+                MessageBox.Show("Для начала надо загрузить данные!", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -59,29 +67,6 @@ namespace Lab4
             // удаляем
             viewClient.RemoveStudentNote(studentData.Id);
         }
-
-        //CellEditEnding="studentsGrid_CellEditEnding" 
-        // и надо потом доделать ограничения добавления записей по хорошему
-        private void studentsGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            var editedStudent = e.Row.Item as Student;
-
-            foreach (var propertyInfo in typeof(Student).GetProperties())
-            {
-                if (propertyInfo.GetCustomAttribute<RequiredAttribute>() != null)
-                {
-                    var originalValue = propertyInfo.GetValue(editedStudent);
-
-                    if (originalValue == null || string.IsNullOrEmpty(originalValue.ToString()))
-                    {
-                        MessageBox.Show($"Колонка {propertyInfo.Name} должна быть обязательно заполнена.");
-                        e.Cancel = true;
-                        break;
-                    }
-                }
-            }
-        }
-
 
         //скрытие айдишников в интерфейсе
         private void studentsGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
